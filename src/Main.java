@@ -5,6 +5,24 @@ public class Main {
 
     public static final String MY_OBJECT_TXT = "myObject.txt";
 
+    public static void main(String[] args) throws Exception {
+        BeerStore beerStore = new BeerStore(); //Store for beers
+
+        BufferedReader commandReaderFromConsole = new BufferedReader(new InputStreamReader(System.in));
+        String line;
+        String command;
+        ArrayList<String> arguments;
+        while(true){
+            line = commandReaderFromConsole.readLine();
+            command = line.split(" ")[0];
+            arguments = new ArrayList<>(Arrays.asList(line.split(" ")));
+            arguments.remove(0);
+
+            beerStore = handleCommands(beerStore, command);
+        }
+
+    }
+
     private static String getBeerNameFromCommand(String command) throws BeerCeption{
         if(command.split(" ").length == 4){
             return command.split(" ")[1];
@@ -29,32 +47,23 @@ public class Main {
         }
     }
 
-
-    public static void main(String[] args) throws Exception {
-        BeerStore beerStore = new BeerStore(); //Store for beers
-
-        BufferedReader commandReadeFromConsole = new BufferedReader(new InputStreamReader(System.in));
-        String command;
-
-        while(true){
-            command = commandReadeFromConsole.readLine();
-            if(command.split(" ")[0].equals("add")){
-                addBeerToBeerStore(beerStore, command);
-            }
-            else if(command.split(" ")[0].equals("list")){
-                listBeersFromBeerStore(beerStore, command);
-            }
-            else if(command.split(" ")[0].equals("write")){
-                serializeBeerStore(beerStore);
-            }
-            else if(command.split(" ")[0].equals("load")){
-                beerStore = deserializeBeerStore();
-            }
-            else if(command.split(" ")[0].equals("delete")){
-                beerStore.deleteBeer(command.split(" ")[1]);
-            }
+    private static BeerStore handleCommands(BeerStore beerStore, String command) throws Exception {
+        if(command.equals("add")){
+            addBeerToBeerStore(beerStore, command);
         }
-
+        else if(command.equals("list")){
+            listBeersFromBeerStore(beerStore, command);
+        }
+        else if(command.equals("write")){
+            serializeBeerStore(beerStore);
+        }
+        else if(command.equals("load")){
+            beerStore = deserializeBeerStore();
+        }
+        else if(command.equals("delete")){
+            beerStore.deleteBeer(command.split(" ")[1]);
+        }
+        return beerStore;
     }
 
     private static BeerStore deserializeBeerStore() throws IOException, ClassNotFoundException {

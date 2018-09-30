@@ -35,6 +35,10 @@ public class BeerStore implements Serializable {
 
 
     public void deleteBeer(String name) {
-
+        for(Beer beer: beers){
+            if(beer.getName().equals(name)){
+                beers.remove(beer);
+            }
+        }
     }
 }
