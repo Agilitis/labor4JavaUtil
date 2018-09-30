@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class BeerStore {
+public class BeerStore implements Serializable {
     ArrayList<Beer> beers = new ArrayList<>();
 
     public BeerStore(){
@@ -33,4 +34,7 @@ public class BeerStore {
     }
 
 
+    public void deleteBeer(String name) {
+
+    }
 }

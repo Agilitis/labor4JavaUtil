@@ -1,4 +1,6 @@
-public class Beer {
+import java.io.Serializable;
+
+public class Beer implements Serializable {
 
 
     private String name;
